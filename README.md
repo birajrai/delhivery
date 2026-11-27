@@ -49,6 +49,10 @@ The example expects TypeScript to be run with a TypeScript runner (for example,
 `npx tsx examples/track-shipment.ts`) and the package to be installed. Add
 `DELHIVERY_API_BASE_URL` only when using a custom Delhivery-provided origin.
 
+Framework starter examples for [Express](./examples/express.ts),
+[Fastify](./examples/fastify.ts), and [Hono](./examples/hono.ts), including
+installation and run notes, are in [`examples/README.md`](./examples/README.md).
+
 ## API methods
 
 The Express API helpers use the documented production/staging routes and

@@ -52,6 +52,8 @@ The example expects TypeScript to be run with a TypeScript runner (for example,
 Framework starter examples for [Express](./examples/express.ts),
 [Fastify](./examples/fastify.ts), and [Hono](./examples/hono.ts), including
 installation and run notes, are in [`examples/README.md`](./examples/README.md).
+It also includes Next.js, React, React Router, Vue, Astro, Nuxt, and SvelteKit
+starters.
 
 ## API methods
 

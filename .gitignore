@@ -3,3 +3,9 @@ dist/
 .env
 .env.*
 !.env.example
+.npm/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.tgz

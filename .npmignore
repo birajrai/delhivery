@@ -1,0 +1,12 @@
+.git/
+.github/
+.vscode/
+.idea/
+src/
+tests/
+examples/
+tsconfig.json
+*.tsbuildinfo
+.env
+.env.*
+!.env.example

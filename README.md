@@ -22,11 +22,8 @@ const client = new DelhiveryClient({
   baseUrl: process.env.DELHIVERY_API_BASE_URL,
 });
 
-// Pass the exact path, query, and payload documented for your account.
-const result = await client.request("documented/endpoint", {
-  method: "GET",
-  query: { example: "value" },
-});
+const serviceability = await client.serviceability.check("110001");
+const tracking = await client.tracking.track("YOUR_WAYBILL");
 ```
 
 The client sends `Authorization: Token <token>` by default. Verify the
@@ -52,11 +49,48 @@ The example expects TypeScript to be run with a TypeScript runner (for example,
 `npx tsx examples/track-shipment.ts`) and the package to be installed. Add
 `DELHIVERY_API_BASE_URL` only when using a custom Delhivery-provided origin.
 
+## API methods
+
+The Express API helpers use the documented production/staging routes and
+Delhivery One token header:
+
+```ts
+await client.serviceability.check("110001");
+await client.waybills.fetch("YOUR_REGISTERED_CLIENT_NAME");
+await client.waybills.fetchBulk("YOUR_REGISTERED_CLIENT_NAME", 10);
+await client.shipments.create({ pickup_location: { name: "Warehouse" }, shipments: [] });
+await client.tracking.track("WAYBILL");
+await client.pickups.create({
+  pickup_time: "18:30:00",
+  pickup_date: "2026-12-01",
+  pickup_location: "Warehouse",
+  expected_package_count: 1,
+});
+await client.labels.packingSlip("WAYBILL");
+await client.charges.estimate({
+  md: "E",
+  cgm: 500,
+  o_pin: "110001",
+  d_pin: "400001",
+  ss: "Delivered",
+});
+await client.shipments.edit({ waybill: "WAYBILL", name: "Updated consignee" });
+await client.shipments.cancel({ waybill: "WAYBILL" });
+await client.shipments.updateNdr("WAYBILL", "RE-ATTEMPT");
+```
+
+The raw `client.request(path, options)` remains available for APIs not yet
+wrapped. All response bodies are returned as-is so integrations can handle the
+account-specific response shape. Rate estimates are approximate; serviceability,
+account eligibility, required fields, and permitted shipment state transitions
+are determined by Delhivery.
+
 ## Official documentation
 
 - [Delhivery One API token setup](https://help.delhivery.com/docs/api-token-generation)
 - [Client Developer Portal](https://help.delhivery.com/docs/client-developer-portal-1)
 - [Official Express tracking API reference](https://delhivery-express-api-doc.readme.io/reference/order-tracking-api)
+- [Express API integration guide and endpoint index](https://delhivery-express-api-doc.readme.io/llms.txt)
 - [Delhivery One help index](https://help.delhivery.com/llms.txt)
 
 The authenticated developer portal provides environment URLs, endpoint

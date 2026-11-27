@@ -36,9 +36,23 @@ export class HttpClient {
         Authorization: `Token ${this.token}`,
         ...this.defaultHeaders,
         ...options.headers,
-        ...(options.body === undefined ? {} : { "Content-Type": "application/json" }),
+        ...(options.body === undefined
+          ? {}
+          : {
+              "Content-Type":
+                options.body instanceof URLSearchParams
+                  ? "application/x-www-form-urlencoded"
+                  : "application/json",
+            }),
       },
-      ...(options.body === undefined ? {} : { body: JSON.stringify(options.body) }),
+      ...(options.body === undefined
+        ? {}
+        : {
+            body:
+              options.body instanceof URLSearchParams || typeof options.body === "string"
+                ? options.body
+                : JSON.stringify(options.body),
+          }),
       signal: options.signal,
     });
 

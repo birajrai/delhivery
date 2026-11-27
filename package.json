@@ -19,7 +19,7 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "test": "node --test"
+    "test": "npm run build && node --test"
   },
   "engines": {
     "node": ">=18"

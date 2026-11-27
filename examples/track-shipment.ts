@@ -25,10 +25,7 @@ const delhivery = new DelhiveryClient({
 });
 
 try {
-  const tracking = await delhivery.request<unknown>("/api/v1/packages/json/", {
-    method: "GET",
-    query: { token: DELHIVERY_API_TOKEN, waybill: WAYBILL },
-  });
+  const tracking = await delhivery.tracking.track(WAYBILL);
   console.log(JSON.stringify(tracking, null, 2));
 } catch (error) {
   console.error("Shipment tracking request failed:", error);
